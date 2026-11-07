@@ -2,4 +2,4 @@
 .vscode/
 data/Corner
 build/
-  
+*.dSYM/
