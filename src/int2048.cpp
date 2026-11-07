@@ -48,7 +48,7 @@ int2048 operator/(const int2048& a, const int2048& b) {}
 int2048& int2048::operator%=(const int2048& other) {}
 int2048 operator%(const int2048& a, const int2048& b) {}
 
-std::istream& operator>>(std::istream& is, const int2048& other) {}
+std::istream& operator>>(std::istream& is, int2048& other) {}
 std::ostream& operator<<(std::ostream& os, const int2048& other) {}
 
 bool operator==(const int2048& a, const int2048& b) {}

@@ -78,7 +78,7 @@ public:
     int2048& operator%=(const int2048&);
     friend int2048 operator%(const int2048&, const int2048&);
 
-    friend std::istream& operator>>(std::istream&, const int2048&);
+    friend std::istream& operator>>(std::istream&, int2048&);
     friend std::ostream& operator<<(std::ostream&, const int2048&);
 
     friend bool operator==(const int2048&, const int2048&);
