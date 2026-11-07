@@ -21,10 +21,9 @@ namespace sjtu {
 class int2048 {
     // todo
 private:
-    std::vector<int> num; //从小到大每一位存5位数字 0-9999
-    bool is_positibve;
-
-    void normalize();
+    std::vector<int> num; //从小到大每一位存4位数字 0-9999
+    bool is_positive;
+    void normalize(); //去除多余的0
 
 public:
     // 构造函数
@@ -41,6 +40,7 @@ public:
 
     // 读入一个大整数
     void read(const std::string&);
+    void read(long long);
     // 输出储存的大整数，无需换行
     void print();
 
@@ -62,6 +62,8 @@ public:
     int2048 operator-() const;
 
     int2048& operator=(const int2048&);
+    int2048& operator=(const std::string&);
+    int2048& operator=(long long other);
 
     int2048& operator+=(const int2048&);
     friend int2048 operator+(const int2048&, const int2048&);
