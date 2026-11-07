@@ -246,7 +246,25 @@ int2048 operator%(const int2048& a, const int2048& b) {}
 std::istream& operator>>(std::istream& is, int2048& other) {}
 std::ostream& operator<<(std::ostream& os, const int2048& other) {}
 
-bool operator==(const int2048& a, const int2048& b) {}
+bool operator==(const int2048& a, const int2048& b) {
+    if (a.is_positive != b.is_positive) {
+        return false;
+    }
+    if (a.num.size() != b.num.size()) {
+        return false;
+    }
+    auto x = a.num.begin();
+    auto y = b.num.begin();
+    while (x != a.num.end() && y != b.num.end()) {
+        if (*x != *y) {
+            return false;
+        }
+        ++x;
+        ++y;
+    }
+
+    return true;
+}
 bool operator!=(const int2048& a, const int2048& b) {}
 bool operator<(const int2048& a, const int2048& b) {}
 bool operator>(const int2048& a, const int2048& b) {}
