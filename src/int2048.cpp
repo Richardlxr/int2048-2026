@@ -154,7 +154,66 @@ int2048& int2048::add(const int2048& other) {
         return *this;
     }
 
-    // TODO: handle operands of different signs
+    // 异号
+    auto a = this->num.begin();
+    auto b = other.num.begin();
+    int carry = 0;
+    while (a != this->num.end() && b != other.num.end()) {
+        long long num_on_this = is_positive ? *a : -(*a);
+        long long num_on_other = other.is_positive ? *b : -(*b);
+        long long ans_on_position = num_on_this + num_on_other + carry;
+        if (ans_on_position < 0) {
+            ans_on_position += 10000;
+            carry = -1;
+        } else {
+            carry = 0;
+        }
+        *a = ans_on_position;
+        ++a;
+        ++b;
+    }
+    while (a != this->num.end()) {
+        long long num_on_this = is_positive ? *a : -(*a);
+        long long ans_on_position = num_on_this + carry;
+        if (ans_on_position < 0) {
+            ans_on_position += 10000;
+            carry = -1;
+        } else {
+            carry = 0;
+        }
+        *a = ans_on_position;
+        ++a;
+    }
+    while (b != other.num.end()) {
+        long long num_on_other = other.is_positive ? *b : -(*b);
+        long long ans_on_position = num_on_other + carry;
+        if (ans_on_position < 0) {
+            ans_on_position += 10000;
+            carry = -1;
+        } else {
+            carry = 0;
+        }
+        this->num.push_back(ans_on_position);
+        ++b;
+    }
+    if (carry == 0) {
+        is_positive = true;
+    } else {
+        // 例如 9999-10000
+        // 出来是 -1 9999
+        this->is_positive = false;
+        int borrow = 0;
+        for (int i = 0; i < num.size(); ++i) {
+            int ans_on_pos = 0 - num[i] - borrow;
+            if (ans_on_pos < 0) {
+                num[i] = ans_on_pos + 10000;
+                borrow = 1;
+            } else {
+                num[i] = ans_on_pos;
+                borrow = 0;
+            }
+        }
+    }
     normalize();
     return *this;
 }
