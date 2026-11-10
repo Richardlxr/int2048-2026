@@ -3,3 +3,4 @@
 data/Corner
 build/
 *.dSYM/
+submit.h
