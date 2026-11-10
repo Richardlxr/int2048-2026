@@ -250,8 +250,28 @@ int2048 operator/(const int2048& a, const int2048& b) {}
 int2048& int2048::operator%=(const int2048& other) {}
 int2048 operator%(const int2048& a, const int2048& b) {}
 
-std::istream& operator>>(std::istream& is, int2048& other) {}
-std::ostream& operator<<(std::ostream& os, const int2048& other) {}
+std::istream& operator>>(std::istream& is, int2048& other) {
+    std::string in;
+    is >> in;
+    other.read(in);
+    return is;
+}
+std::ostream& operator<<(std::ostream& os, const int2048& other) {
+    if (!other.is_positive) {
+        std::cout << '-';
+    }
+    int size = other.num.size();
+    if (size > 0) {
+        std::cout << other.num[size - 1];
+    }
+    for (int i = size - 2; i >= 0; --i) {
+        std::printf("%04lld", other.num[i]);
+    }
+    if (size == 0) {
+        std::cout << '0';
+    }
+    return os;
+}
 
 bool operator==(const int2048& a, const int2048& b) {
     if (a.is_positive != b.is_positive) {
