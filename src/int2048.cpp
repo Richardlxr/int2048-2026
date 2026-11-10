@@ -102,102 +102,66 @@ void int2048::print() {
     }
 }
 
-// 加上一个大整数
-// TODO:处理负数
-int2048& int2048::add(const int2048& other) {
-    if (is_positive && other.is_positive) {
-        auto a = this->num.begin();
-        auto b = other.num.begin();
-        bool carry = false;
-        while (a != this->num.end() && b != other.num.end()) {
-            int ans_on_position = *a + *b + static_cast<int>(carry);
-            if (*a + *b + static_cast<int>(carry) >= 10000) {
-                carry = true;
-                ans_on_position -= 10000;
-            } else {
-                carry = false;
-            }
-            *a = ans_on_position;
-            ++a;
-            ++b;
+void int2048::add_abs(const int2048& other) {
+    auto a = this->num.begin();
+    auto b = other.num.begin();
+    bool carry = false;
+    while (a != this->num.end() && b != other.num.end()) {
+        long long ans_on_position = *a + *b + static_cast<int>(carry);
+        if (ans_on_position >= 10000) {
+            carry = true;
+            ans_on_position -= 10000;
+        } else {
+            carry = false;
         }
-        while (a != this->num.end()) {
-            int ans_on_position = *a + static_cast<int>(carry);
-            if (ans_on_position >= 10000) {
-                carry = true;
-                ans_on_position -= 10000;
-            } else {
-                carry = false;
-            }
-            *a = ans_on_position;
-            ++a;
+        *a = ans_on_position;
+        ++a;
+        ++b;
+    }
+    while (a != this->num.end()) {
+        long long ans_on_position = *a + static_cast<int>(carry);
+        if (ans_on_position >= 10000) {
+            carry = true;
+            ans_on_position -= 10000;
+        } else {
+            carry = false;
         }
-        while (b != other.num.end()) {
-            int ans_on_position = *b + static_cast<int>(carry);
-            if (ans_on_position >= 10000) {
-                carry = true;
-                ans_on_position -= 10000;
-            } else {
-                carry = false;
-            }
-            this->num.push_back(ans_on_position);
-            ++b;
+        *a = ans_on_position;
+        ++a;
+    }
+    while (b != other.num.end()) {
+        long long ans_on_position = *b + static_cast<int>(carry);
+        if (ans_on_position >= 10000) {
+            carry = true;
+            ans_on_position -= 10000;
+        } else {
+            carry = false;
         }
-        if (carry == 1) {
-            this->num.push_back(1);
-        }
-        normalize();
-        return *this;
-    } else {
+        this->num.push_back(ans_on_position);
+        ++b;
+    }
+    if (carry) {
+        this->num.push_back(1);
     }
 }
+
+// 加上一个大整数
+int2048& int2048::add(const int2048& other) {
+    // 同号
+    if (is_positive == other.is_positive) {
+        add_abs(other);
+        normalize();
+        return *this;
+    }
+
+    // TODO: handle operands of different signs
+    normalize();
+    return *this;
+}
 // 返回两个大整数之和
-//TODO: 处理负数
 int2048 add(const int2048& a, const int2048& b) {
-    int2048 ans;
-    ans.num.clear();
-    auto a_it = a.num.begin();
-    auto b_it = b.num.begin();
-    bool carry = false;
-    while (a_it != a.num.end() && b_it != b.num.end()) {
-        int ans_on_position = *a_it + *b_it + static_cast<int>(carry);
-        if (ans_on_position >= 10000) {
-            carry = true;
-            ans_on_position -= 10000;
-        } else {
-            carry = false;
-        }
-        ans.num.push_back(ans_on_position);
-        ++a_it;
-        ++b_it;
-    }
-    while (a_it != a.num.end()) {
-        int ans_on_position = *a_it + static_cast<int>(carry);
-        if (ans_on_position >= 10000) {
-            carry = true;
-            ans_on_position -= 10000;
-        } else {
-            carry = false;
-        }
-        ans.num.push_back(ans_on_position);
-        ++a_it;
-    }
-    while (b_it != b.num.end()) {
-        int ans_on_position = *b_it + static_cast<int>(carry);
-        if (ans_on_position >= 10000) {
-            carry = true;
-            ans_on_position -= 10000;
-        } else {
-            carry = false;
-        }
-        ans.num.push_back(ans_on_position);
-        ++b_it;
-    }
-    if (carry == 1) {
-        ans.num.push_back(1);
-    }
-    ans.normalize();
-    return ans;
+    int2048 ans = a;
+    return ans.add(b);
 }
 
 // 减去一个大整数

@@ -24,6 +24,8 @@ private:
     std::vector<long long> num; //从小到大每一位存4位数字 0-9999
     bool is_positive;
     void normalize(); //去除多余的0
+    // Add |other| to the magnitude of *this; the sign is left untouched.
+    void add_abs(const int2048&);
 
 public:
     // 构造函数
