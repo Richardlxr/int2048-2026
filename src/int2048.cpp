@@ -208,8 +208,12 @@ int2048 minus(const int2048& a, const int2048& b) {}
 // Integer2
 // ===================================
 
-int2048 int2048::operator+() const {}
-int2048 int2048::operator-() const {}
+int2048 int2048::operator+() const { return *this; }
+int2048 int2048::operator-() const {
+    int2048 ans = *this;
+    ans.is_positive = !ans.is_positive;
+    return ans;
+}
 
 int2048& int2048::operator=(const int2048& other) {
     this->num = other.num;
