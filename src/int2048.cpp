@@ -217,7 +217,7 @@ int2048 int2048::operator-() const {
 }
 
 int2048& int2048::operator=(const int2048& other) {
-    if (other == *this) {
+    if (&other == this) {
         return *this;
     }
     this->num = other.num;
