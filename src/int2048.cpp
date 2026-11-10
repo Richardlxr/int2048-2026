@@ -1,4 +1,5 @@
 #include "int2048.h"
+#include <complex>
 #include <cstdio>
 #include <string>
 
@@ -48,7 +49,6 @@ void int2048::read(const std::string& input) {
         is_positive = true;
     }
     num.reserve(2048);
-    int group = 0;
     int mode4 = 0;
     std::string temp_string;
     for (auto it = input.rbegin(); it != input.rend(); ++it) {
