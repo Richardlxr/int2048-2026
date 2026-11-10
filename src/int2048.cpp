@@ -95,7 +95,7 @@ void int2048::print() {
         std::cout << num[size - 1];
     }
     for (int i = size - 2; i >= 0; --i) {
-        std::printf("%04d", num[i]);
+        std::printf("%04lld", num[i]);
     }
     if (size == 0) {
         std::cout << '0';
