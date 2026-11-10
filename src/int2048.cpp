@@ -1,6 +1,7 @@
 #include "int2048.h"
 #include <complex>
 #include <cstdio>
+#include <iomanip>
 #include <string>
 
 namespace sjtu {
@@ -212,8 +213,8 @@ int2048 int2048::operator+() const { return *this; }
 int2048 int2048::operator-() const {
     int2048 ans = *this;
     ans.is_positive = !ans.is_positive;
-    return ans;
     ans.normalize();
+    return ans;
 }
 
 int2048& int2048::operator=(const int2048& other) {
@@ -259,17 +260,20 @@ std::istream& operator>>(std::istream& is, int2048& other) {
 }
 std::ostream& operator<<(std::ostream& os, const int2048& other) {
     if (!other.is_positive) {
-        std::cout << '-';
+        os << '-';
     }
     int size = other.num.size();
     if (size > 0) {
-        std::cout << other.num[size - 1];
+        os << other.num[size - 1];
     }
+    auto old_fill = os.fill('0');
     for (int i = size - 2; i >= 0; --i) {
-        std::printf("%04lld", other.num[i]);
+        os << std::setw(4) << other.num[i];
     }
+    //NOTE: 记得恢复fill setw会自己恢复
+    os.fill(old_fill);
     if (size == 0) {
-        std::cout << '0';
+        os << '0';
     }
     return os;
 }
