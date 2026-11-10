@@ -104,7 +104,7 @@ void int2048::print() {
 // 加上一个大整数
 // TODO:处理负数
 int2048& int2048::add(const int2048& other) {
-    if (other.is_positive) {
+    if (is_positive && other.is_positive) {
         auto a = this->num.begin();
         auto b = other.num.begin();
         bool carry = false;
