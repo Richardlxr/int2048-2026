@@ -200,9 +200,9 @@ int2048 add(const int2048& a, const int2048& b) {
 }
 
 // 减去一个大整数
-int2048& int2048::minus(const int2048& other) {}
+int2048& int2048::minus(const int2048& other) { return add(-other); }
 // 返回两个大整数之差
-int2048 minus(const int2048& a, const int2048& b) {}
+int2048 minus(const int2048& a, const int2048& b) { return add(a, -b); }
 
 // ===================================
 // Integer2
