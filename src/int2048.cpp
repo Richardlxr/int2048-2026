@@ -1,7 +1,6 @@
 #include "int2048.h"
 #include <complex>
 #include <cstdio>
-#include <iomanip>
 #include <string>
 
 namespace sjtu {
@@ -266,12 +265,16 @@ std::ostream& operator<<(std::ostream& os, const int2048& other) {
     if (size > 0) {
         os << other.num[size - 1];
     }
-    auto old_fill = os.fill('0');
+
     for (int i = size - 2; i >= 0; --i) {
-        os << std::setw(4) << other.num[i];
+        std::string number = std::to_string(other.num[i]);
+        int zero_to_fill = 4 - number.size();
+        std::string fill;
+        fill.resize(zero_to_fill, '0');
+        number.insert(0, fill);
+        os << number;
     }
-    //NOTE: 记得恢复fill setw会自己恢复
-    os.fill(old_fill);
+
     if (size == 0) {
         os << '0';
     }
