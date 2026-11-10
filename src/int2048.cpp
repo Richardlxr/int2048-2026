@@ -232,11 +232,11 @@ int2048& int2048::operator=(long long other) {
     return *this;
 }
 
-int2048& int2048::operator+=(const int2048&) {}
-int2048 operator+(const int2048& a, const int2048& b) {}
+int2048& int2048::operator+=(const int2048& other) { return add(other); }
+int2048 operator+(const int2048& a, const int2048& b) { return add(a, b); }
 
-int2048& int2048::operator-=(const int2048&) {}
-int2048 operator-(const int2048& a, const int2048& b) {}
+int2048& int2048::operator-=(const int2048& other) { return minus(other); }
+int2048 operator-(const int2048& a, const int2048& b) { return minus(a, b); }
 
 int2048& int2048::operator*=(const int2048& other) {}
 int2048 operator*(const int2048&, const int2048&) {}
