@@ -216,6 +216,9 @@ int2048 int2048::operator-() const {
 }
 
 int2048& int2048::operator=(const int2048& other) {
+    if (other == *this) {
+        return *this;
+    }
     this->num = other.num;
     this->is_positive = other.is_positive;
     this->normalize();
