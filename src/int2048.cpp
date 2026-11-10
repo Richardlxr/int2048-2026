@@ -2,6 +2,7 @@
 #include <complex>
 #include <cstdio>
 #include <string>
+#include <vector>
 
 namespace sjtu {
 
