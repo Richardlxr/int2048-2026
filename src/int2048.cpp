@@ -30,7 +30,7 @@ void int2048::read(long long input) {
 
     num.reserve(2048);
     while (uinput / 10000 > 0) {
-        int extra = uinput % 10000;
+        long long extra = uinput % 10000;
         num.push_back(extra);
         uinput = uinput / 10000;
     }

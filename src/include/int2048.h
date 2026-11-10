@@ -21,7 +21,7 @@ namespace sjtu {
 class int2048 {
     // todo
 private:
-    std::vector<int> num; //从小到大每一位存4位数字 0-9999
+    std::vector<long long> num; //从小到大每一位存4位数字 0-9999
     bool is_positive;
     void normalize(); //去除多余的0
 
