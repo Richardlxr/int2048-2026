@@ -273,22 +273,22 @@ int2048& int2048::operator*=(const int2048& other) {
 }
 int2048 operator*(const int2048& a, const int2048& b) {
     int2048 ans;
-    int2048 tmp;
-
+    ans.num.assign(a.num.size() + b.num.size() + 1, 0);
     int factor_a = 0;
     int factor_b = 0;
     for (auto x : b.num) {
         factor_a = 0;
         for (auto y : a.num) {
-            tmp.num.assign(factor_a + factor_b, 0);
             long long bit = x * y;
-            tmp.num.push_back(bit % 10000);
-            tmp.num.push_back(bit / 10000);
-            tmp.normalize();
-            ans += tmp;
+            ans.num[factor_a + factor_b] += bit % 10000;
+            ans.num[factor_a + factor_b + 1] += bit / 10000;
             ++factor_a;
         }
         ++factor_b;
+    }
+    for (long long i = 0; i < ans.num.size() - 1; ++i) {
+        ans.num[i + 1] += ans.num[i] / 10000;
+        ans.num[i] = ans.num[i] % 10000;
     }
     if (a.is_positive == b.is_positive) {
         ans.is_positive = true;
