@@ -325,8 +325,18 @@ bool operator==(const int2048& a, const int2048& b) {
     return true;
 }
 bool operator!=(const int2048& a, const int2048& b) { return !(a == b); }
-bool operator<(const int2048& a, const int2048& b) {}
-bool operator>(const int2048& a, const int2048& b) {}
-bool operator<=(const int2048& a, const int2048& b) {}
-bool operator>=(const int2048& a, const int2048& b) {}
+bool operator<(const int2048& a, const int2048& b) { return (a - b).is_positive == false; }
+bool operator>(const int2048& a, const int2048& b) {
+    int2048 outcome = a - b;
+    return outcome.is_positive && !outcome.num.empty() && outcome.num[0] > 0;
+}
+bool operator<=(const int2048& a, const int2048& b) {
+    int2048 outcome = a - b;
+    return !outcome.is_positive || outcome.num.empty() ||
+           (outcome.num.size() == 1 && outcome.num[0] == 0);
+}
+bool operator>=(const int2048& a, const int2048& b) {
+    int2048 outcome = a - b;
+    return outcome.is_positive;
+}
 } // namespace sjtu
