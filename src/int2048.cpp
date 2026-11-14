@@ -266,8 +266,38 @@ int2048 operator+(const int2048& a, const int2048& b) { return add(a, b); }
 int2048& int2048::operator-=(const int2048& other) { return minus(other); }
 int2048 operator-(const int2048& a, const int2048& b) { return minus(a, b); }
 
-int2048& int2048::operator*=(const int2048& other) {}
-int2048 operator*(const int2048&, const int2048&) {}
+int2048& int2048::operator*=(const int2048& other) {
+    int2048 ans = *this * other;
+    *this = ans;
+    return *this;
+}
+int2048 operator*(const int2048& a, const int2048& b) {
+    int2048 ans;
+    int2048 tmp;
+
+    int factor_a = 0;
+    int factor_b = 0;
+    for (auto x : b.num) {
+        factor_a = 0;
+        for (auto y : a.num) {
+            tmp.num.assign(factor_a + factor_b, 0);
+            long long bit = x * y;
+            tmp.num.push_back(bit % 10000);
+            tmp.num.push_back(bit / 10000);
+            tmp.normalize();
+            ans += tmp;
+            ++factor_a;
+        }
+        ++factor_b;
+    }
+    if (a.is_positive == b.is_positive) {
+        ans.is_positive = true;
+    } else {
+        ans.is_positive = false;
+    }
+    ans.normalize();
+    return ans;
+}
 
 int2048& int2048::operator/=(const int2048& other) {}
 int2048 operator/(const int2048& a, const int2048& b) {}
